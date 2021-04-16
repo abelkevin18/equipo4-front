@@ -1,0 +1,84 @@
+:root {
+    --new-primary : #002a8d;
+    --new-secondary: #ff7800;
+    --max-with-login: 330px;
+    --max-with-main:425px;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: 'Poppins', sans-serif;;
+}
+
+form.form-signin {
+    width: 100%;
+    padding: 15px;
+    margin: 67px auto;
+    border-radius: 8px;
+    text-align: center;
+}
+
+main, form.form-signin{
+    max-width: var(--max-with-login);
+}
+
+section {
+    padding: 10px;
+    margin-bottom: 17px;
+}
+
+section, h1, form.form-signin{
+    -webkit-box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+}
+.font-weight-normal {
+    font-weight: 400!important;
+    box-shadow: none;
+}
+main{
+    margin: auto;
+    max-width: var(--max-with-main);
+}
+
+h1 {
+    background-color: var(--new-primary);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: 600 !important;
+    font-size: 1.7rem !important;
+}
+
+h2{
+    color: var(--new-secondary);
+    font-weight: 600 !important;
+    font-size: 1.5rem !important;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: var(--new-primary) !important;
+    border-color: var(--new-primary) !important;
+}
+.material-icons {
+    vertical-align: text-top;
+}
+section.buttoms {
+    text-align: center;
+}
+form.form-signin h1 {
+    background-color: transparent;
+    color: var(--new-secondary);
+}
+section.buttoms .btn-secondary {
+    background-color: var(--new-secondary);
+    color: white;
+    border-color: var(--new-secondary);
+    width: 90px;
+    font-size: 1.4rem;
+}
+
+a.icon {
+    text-align: center;
+    display: block;
+}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DESAFIO 2</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.2/dist/sweetalert2.all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    
+    <!-- header -->
+    <header></header>
+    <!-- end header -->
+
+    <!-- main -->
+    <main>
+        <h1 class="h3 mb-3">
+            <i class="material-icons">sms</i>INGRESE CODIGO DEL MENSAJE SMS
+        </h1>
+        <section>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6"><h5>Codigo SMS</h5></div>
+                    <div class="col-6"><input type="text" class="form-control code-sms" placeholder="sms"></div>
+                </div>
+            </div>
+        </section>
+        <section class="buttoms">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6"><a href="./index.html" class="btn btn-secondary">ATRAS</a></div>
+                    <div class="col-6"><a class="btn btn-secondary" onclick="verify_code()">ENVIAR</a></div>
+                </div>
+            </div>
+        </section>
+        </main>
+    <!-- end main -->
+
+    <!-- footer -->
+    <footer></footer>
+    <!-- end-footer -->
+    <script src="./assets/js/app.js"></script>
+
+    <script>
+        function send_sms() {
+                let url = 'http://20.94.144.40:8090/login/sendMessage'
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        data:JSON.stringify({'phoneNumber':localStorage.getItem('phoneNumber'),'email': localStorage.getItem('email')}),
+                        success: function (data) {
+                            resolve(data)
+                        },
+                        error: function (error) {
+                            reject(error)
+                        },
+                    })
+            })
+        }
+
+        function send_sms_code_verify() {
+            /*
+            {​​​​​
+                "code": "C76CD5",
+                "email": "hito.ortiz@gmail.com"
+                }​​​​​
+            */
+            let url = 'http://20.94.144.40:8090/login/verifyCode'
+
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                url: url,
+                type: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                data:JSON.stringify({'code':localStorage.getItem('code'),'email': localStorage.getItem('email')}),
+                success: function (data) {
+                    resolve(data)
+                },
+                error: function (error) {
+                    reject(error)
+                },
+                })
+            })
+        }
+    
+    
+        function verify_code() {
+    
+            send_sms_code_verify()
+            .then((data) => {
+                console.log(data)
+                //$('.code-sms').value()
+                alert('Autenticacion Exitosa')
+                window.location.href = './admin/dashboard-tarjetas.html';
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+            
+        }
+        
+        $(document).ready(function() {
+            send_sms()
+            .then((data) => {
+                console.log(data)
+                
+                localStorage.setItem('code', data['code'])
+                
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        })
+
+    </script>
+
+</body>
+</html>
